@@ -10,7 +10,7 @@ _paginate: false
 
 ![bg opacity](./assets/gradient.jpg)
 
-# <!--fit--> Marp CLI example
+# Caching Browser
 
 Hosting Marp slide deck on the web
 
