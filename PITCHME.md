@@ -120,6 +120,7 @@ Expires: Thu, 01 Jan 2023 00:00:00 GMT
 ![bg opacity](./assets/gradient.jpg)
 
 1. **[Cache-Control Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)**
+
 - **Ưu điểm**:
   - Cung cấp kiểm soát linh hoạt: Cache-Control là một header rất linh hoạt với nhiều chỉ thị như max-age, no-cache, no-store, public, private,...
   - Cho phép định rõ thời gian tối đa mà tài nguyên có thể được lưu trữ trên máy khách và các proxy server.
@@ -226,6 +227,21 @@ Expires: Thu, 01 Jan 2023 00:00:00 GMT
 - **Hạn chế**:
   - **Tăng tải cho máy chủ**: Nếu không được quản lý cẩn thận, caching tại mức server-side có thể tăng gánh nặng cho máy chủ khi phải xử lý nhiều yêu cầu caching.
   - **Không hiệu quả đối với dữ liệu động**: Caching server-side thường không hiệu quả đối với dữ liệu động, đặc biệt là nếu dữ liệu thay đổi thường xuyên.
+
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+### Kết luận
+
+- **Kết Hợp Sử Dụng**: Nhiều ứng dụng sử dụng cả hai chiến lược, kết hợp client-side và server-side caching để tối ưu hóa hiệu suất và kiểm soát tài nguyên.
+
+- **Các Kịch Bản Sử Dụng Khác Nhau**: Client-side caching thường được ưu tiên cho các tài nguyên như hình ảnh, CSS và JavaScript. Server-side caching thường được sử dụng cho các trang động và dữ liệu từ máy chủ.
+
+---
+![bg opacity](./assets/gradient.jpg)
+
+- **Tùy Chọn Cấu Hình**: Quyết định sử dụng client-side hay server-side caching phụ thuộc vào yêu cầu cụ thể của ứng dụng, loại tài nguyên, và yêu cầu hiệu suất của người dùng.
 
 ---
 
