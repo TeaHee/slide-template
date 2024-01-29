@@ -1,7 +1,7 @@
 ---
 marp: true
 title: Workshop ASP
-description: Giới thiệu về Browser Caching
+description: Làm thế nào để viết code rõ ràng, tối ưu và dễ bảo trì 
 theme: uncover
 transition: fade
 paginate: true
@@ -10,7 +10,7 @@ _paginate: false
 
 ![bg opacity](./assets/gradient.jpg)
 
-# Tận dụng Caching để tối ưu hóa hiệu suất trình duyệt
+# Cách viết code rõ ràng, tối ưu và dễ bảo trì
 
 <!-- This is presenter note. You can write down notes through HTML comment. -->
 
@@ -20,7 +20,7 @@ _paginate: false
 
 ### Mục tiêu của workshop:
 
-Hiểu rõ về cơ chế caching trong trình duyệt và cách sử dụng nó để tối ưu hiệu suất ứng dụng web.
+Giới thiệu về nguyên tắc **[SOILD](https://en.wikipedia.org/wiki/SOLID)** trong việc coding giúp cho việc bảo trì và nâng cấp dễ dàng hơn.
 
 <style scoped>p { text-align: left; }</style>
 
@@ -28,239 +28,342 @@ Hiểu rõ về cơ chế caching trong trình duyệt và cách sử dụng nó
 
 ![bg opacity](./assets/gradient.jpg)
 
-### Tại sao **[Caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)** quan trọng?
+### Nguyên tắc **[SOILD](https://en.wikipedia.org/wiki/SOLID)**
 
-- Các trình duyệt thường sẽ lưu lại các bản copy của các static asset ở local để giảm thời gian tải và tối thiểu hóa lượng dữ liệu phải truyền tải, việc này gọi là caching.
-
-- Việc caching sẽ giúp giảm thời gian tải, cùng với đó việc không tải những dữ liệu không cần thiết cũng giúp giảm lưu lượng phải truyền tải.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### Có 2 dạng Caching
-
-1. Caching Tại Mức Điều Khiển (Client-Side)
-2. Caching Tại Mức Proxy Server (Server-Side)
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### Caching tại mức điều khiển (Client-Side)
-
-- Quá trình lưu trữ và tái sử dụng tài nguyên trên máy khách (trình duyệt) của người dùng
-
-- Mục tiêu của caching này là giảm thời gian tải trang web và tối ưu hóa trải nghiệm người dùng bằng cách giảm lượng dữ liệu cần phải tải lại từ máy chủ.
-
-<!-- ## **[GitHub Pages](https://github.com/pages)** -->
-
-<!-- #### Ready to write & host your deck! -->
-
-<!-- [![Use this as template h:1.5em](https://img.shields.io/badge/-Use%20this%20as%20template-brightgreen?style=for-the-badge&logo=github)](https://github.com/yhatt/marp-cli-example/generate) -->
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### Một số khái niệm trong Caching Client-Side
-
-1. **[Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)**: Hiển thị một số giá trị như max-age, no-cache, no-store,... được sử dụng để định rõ cách trình duyệt nên lưu trữ và sử dụng tài nguyên.
-
-```
-Cache-Control: max-age=3600
-```
-
-2. **[Expires](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expires)**: chỉ định một thời điểm cụ thể trong tương lai khi tài nguyên sẽ hết hạn.
-
-```
-Expires: Thu, 01 Jan 2023 00:00:00 GMT
-```
-
-<!-- ![bg right 60%](https://icongr.am/simple/netlify.svg?colored)
-
-## **[Netlify](https://www.netlify.com/)**
-
-#### Ready to write & host your deck!
-
-[![Deploy to Netlify h:1.5em](./assets/netlify-deploy-button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yhatt/marp-cli-example) -->
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-3. **[LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)** và **[SessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)**: là hai API của HTML5 được sử dụng để lưu trữ dữ liệu trên máy khách.
-
-- Dữ liệu được lưu trong **LocalStorage** có thể tồn tại mãi mãi, trong khi dữ liệu trong **SessionStorage** chỉ tồn tại trong phiên làm việc của trình duyệt.
-
-4. **[Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)**: là một công nghệ mạnh mẽ cho caching và xử lý sự kiện offline.
-
-- Cho phép triển khai các chiến lược caching phức tạp và quản lý tài nguyên nằm ngoài khả năng của trình duyệt chính.
-
-<!-- ![bg right 60%](https://icongr.am/simple/zeit.svg)
-
-## **[Vercel](https://vercel.com/)**
-
-#### Ready to write & host your deck!
-
-[![Deploy to Vercel h:1.5em](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/yhatt/marp-cli-example) -->
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### Caching tại mức **[Proxy Server](https://developer.mozilla.org/en-US/docs/Glossary/Proxy_server)** (Server-Side)
-
-- Là quá trình lưu trữ tài nguyên không chỉ trên trình duyệt client mà còn trên các proxy server và máy chủ. Điều này giúp giảm tải cho máy chủ và tăng tốc độ tải trang web cho nhiều người dùng bằng cách giảm lượng dữ liệu phải đi qua mạng.
-
-<!-- ### fit :ok_hand: -->
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-1. **[Cache-Control Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)**
-
-- **Ưu điểm**:
-  - Cung cấp kiểm soát linh hoạt: Cache-Control là một header rất linh hoạt với nhiều chỉ thị như max-age, no-cache, no-store, public, private,...
-  - Cho phép định rõ thời gian tối đa mà tài nguyên có thể được lưu trữ trên máy khách và các proxy server.
-- **Hạn Chế**:
-  - Đôi khi việc cấu hình Cache-Control có thể đòi hỏi sự cân nhắc kỹ lưỡng để đảm bảo hiểu quả và đồng thời giữ cho trang web luôn cập nhật.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-2. **[Expires Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expires)**
-
-- **Ưu điểm**:
-
-  - Xác định thời điểm cụ thể khi tài nguyên sẽ hết hạn.
-  - Dễ hiểu và triển khai.
-
-- **Hạn Chế**:
-
-  - Thường không được ưa chuộng so với Cache-Control do thiếu sự linh hoạt.
-  - Yêu cầu máy chủ đồng bộ hóa chính xác với thời gian hết hạn.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-3. **[ETag Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)**
-
-- **Ưu điểm**:
-
-  - Dùng để kiểm tra xem tài nguyên có thay đổi hay không.
-  - Giúp máy chủ tránh việc gửi lại toàn bộ tài nguyên khi nó không thay đổi.
-
-- **Hạn Chế**:
-
-  - Tăng kích thước gói tin và có thể tạo ra overhead nếu không được sử dụng đúng cách.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-4. **[Vary Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary)**
-
-- **Ưu điểm**:
-
-  - Xác định các yếu tố nào sẽ được xem xét khi kiểm tra xem tài nguyên đã được lưu trữ chưa (ví dụ: Vary: User-Agent).
-
-- **Hạn Chế**:
-
-  - Cần phải được sử dụng cẩn thận để tránh các vấn đề về caching không mong muốn.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-5. **[Pragma Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Pragma)**
-
-- **Ưu điểm**:
-
-  - Chủ yếu được sử dụng như một phương tiện tương thích với các phiên bản HTTP cũ hơn.
-
-- **Hạn Chế**:
-
-  - Đã lạc lõng trong các phiên bản gần đây và thường được thay thế bằng Cache-Control.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### So sánh giữa **Client-Side Caching** và **Server-Side Caching**
-
-**Client-Side Caching**
-
-- **Điểm mạnh**:
-  - **Tốc độ truy cập nhanh**: Tài nguyên được lưu trữ trực tiếp trên trình duyệt client, giúp giảm thời gian tải trang cho người dùng khi họ truy cập lại trang web.
-  - **Giảm tải cho máy chủ**: Giảm áp lực lên máy chủ do tài nguyên được lưu trữ và sử dụng từ bộ nhớ cache của trình duyệt client.
+**[SOILD](https://en.wikipedia.org/wiki/SOLID)** là từ viết tắt dễ nhớ được đặt bởi **[Uncle Bob](https://en.wikipedia.org/wiki/Robert_C._Martin)** vào đầu những năm 2000.
 
 <style scoped>p { text-align: left; }</style>
+---
+
+![bg opacity](./assets/gradient.jpg)
+Nó đại điện cho một nhóm 5 nguyên tắc:
+
+- **Nguyên tắc đơn nhiệm** (Single Responsibility Principle).
+- **Nguyên tắc đóng mở** (Open/Closed Principle).
+- **Nguyên tắc thay thế Liskov** (Liskov Substitution Principle).
+- **Nguyên tắc phân tách giao diện** (Interface Segregation Principle).
+- **Nguyên tắc nghịch đảo phụ thuộc** (Dependency Inversion Principle).
 
 ---
 
 ![bg opacity](./assets/gradient.jpg)
 
-- **Hạn chế**:
-  - **Dung lượng hạn chế**: Bộ nhớ cache trên trình duyệt client có thể bị giới hạn và có thể bị xóa bất cứ lúc nào, đặc biệt là khi người dùng xóa lịch sử trình duyệt.
-  - **Không kiểm soát tuyệt đối**: Không hoàn toàn kiểm soát được bởi máy chủ, điều này có thể dẫn đến việc sử dụng phiên bản cũ của tài nguyên khi đóng bộ nhớ cache.
+### 1. Nguyên tắc đơn nhiệm (Single Responsibility Principle - SRP)
 
+- Mỗi một class (lớp) chỉ nên làm một chức năng nhất định. Phải xác định class đó có vai trò, chức năng là gì.
+
+- Nguyên tắc SRP có ý nghĩa quan trọng trong phát triển phần mềm vì nó giúp giảm thiểu rủi ro thay đổi, tăng tính linh hoạt và bảo trì.
+
+<style scoped> { text-align: left; }</style>
 ---
 
 ![bg opacity](./assets/gradient.jpg)
 
-**Server-Side Caching**
+```` js
+// Đúng nguyên tắc
+function calcPerimeterRectangle(width: number, height: number) {
+  return 2 * (width + height);
+}
 
-- **Điểm mạnh**:
-  - **Kiểm soát cao**: Máy chủ có kiểm soát đầy đủ về cách tài nguyên được lưu trữ và tái sử dụng.
-  - **Áp dụng đối với tất cả người dùng**: Caching ở mức server-side áp dụng cho tất cả người dùng, giúp giảm thời gian tải trang cho mọi người dùng truy cập.
+// Sai nguyên tắc
+function calcPerimeterAndAreaOfRectangle(width: number, height: number) {
+  const perimeter = 2 * (width + height);
+  const rectangle = width * height
+  return [perimeter, rectangle];
+}
+````
+<!-- 
+Trong ví dụ này, hàm `calcPerimeterAndAreaOfRectangle` không chỉ tính toán chu vi của hình chữ nhật mà còn tính toán diện tích. 
+
+Điều này vi phạm SRP vì hàm đang thực hiện hai nhiệm vụ khác nhau: tính diện tích và tính chu vi. Điều này làm cho hàm điều này làm cho hàm trở nên không rõ ràng và khó bảo trì.
+
+Nếu có một thay đổi trong cách tính diện tích hoặc chu vi của hình chữ nhật, ta sẽ phải sửa đổi hàm này, điều này có thể dẫn đến các rủi ro không mong muốn khác.
+-->
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+### 2. Nguyên tắc đóng mở (Open/Closed Principle - OCP)
+
+- Theo nguyên lý này, mỗi khi ta muốn thêm chức năng,.. cho chương trình, chúng ta nên viết class mới mở rộng từ class cũ (bằng cách kế thừa hoặc sở hữu class cũ) không nên sửa đổi class cũ.
+
+<style scoped> { text-align: left; }</style>
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+```js
+// Định nghĩa một interface cho hình chữ nhật
+interface Rectangle {
+  width: number;
+  height: number;
+}
+
+// Hàm tính chu vi của hình chữ nhật
+function calcPerimeterRectangle(rectangle: Rectangle): number {
+  return 2 * (rectangle.width + rectangle.height);
+}
+```
+
+---
+![bg opacity](./assets/gradient.jpg)
+
+```js
+
+// Hàm tính tổng chu vi của các hình chữ nhật
+function sumPerimeterRectangles(rectangles) {
+  const result = rectangles.reduce((total, rectangle) => {
+    return total + calcPerimeterRectangle(rectangle.width, rectangle.height)
+  }, 0);
+
+  return result
+}
+
+// Các hình chữ nhật
+const rectangles: Rectangle[] = [
+  { width: 4, height: 5 },
+  { width: 2, height: 3 },
+  { width: 6, height: 7 }
+];
+
+// Tính tổng chu vi của các hình chữ nhật
+const totalPerimeter: number = sumPerimeterRectangles(rectangles);
+console.log("Total perimeter:", totalPerimeter);
+```
+<!--
+Chúng ta định nghĩa một interface `Rectangle` để mô tả hình chữ nhật với các thuộc tính width và height. 
+
+Hàm `calcPerimeterRectangle` sử dụng một đối tượng hình chữ nhật và tính toán chu vi dựa trên các thuộc tính width và height. 
+
+Điều này cho phép chúng ta dễ dàng mở rộng tính năng của hàm này bằng cách chỉ định thêm thuộc tính trong interface `Rectangle` mà không cần phải sửa đổi hàm tính chu vi.
+-->
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+### 3. Nguyên tắc thay thế Liskov (Liskov Substitution Principle - LSP)
+
+- Nguyên tắc này nói rằng các thực thể (đối tượng, class con, function con)  có thể thay thế bằng các thực thể của lớp cha mà không làm thay đổi tính đúng đắn của chương trình.
+
+<style scoped> { text-align: left; }</style>
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+```js
+// Giao diện cho các hình học có khả năng tính diện tích
+interface Shape {
+  calculateArea(): number;
+}
+
+// Lớp hình chữ nhật (Rectangle) triển khai giao diện Shape
+class Rectangle implements Shape {
+  constructor(private width: number, private height: number) {}
+
+  calculateArea(): number {
+    return this.width * this.height;
+  }
+}
+```
+
+---
+![bg opacity](./assets/gradient.jpg)
+
+```js
+// Lớp hình vuông (Square) cũng triển khai giao diện Shape
+class Square implements Shape {
+  constructor(private sideLength: number) {}
+
+  calculateArea(): number {
+    return Math.pow(this.sideLength, 2);
+  }
+}
+
+// Hàm tính tổng diện tích của các hình
+function sumAreas(shapes: Shape[]): number {
+  let totalArea = 0;
+  for (let shape of shapes) {
+    totalArea += shape.calculateArea();
+  }
+  return totalArea;
+}
+```
+---
+![bg opacity](./assets/gradient.jpg)
+
+```js
+// Sử dụng các hình học
+const rectangle = new Rectangle(4, 5);
+const square = new Square(4);
+
+// Tính tổng diện tích của các hình
+const totalArea = sumAreas([rectangle, square]);
+console.log("Total area:", totalArea);
+```
+<!--
+Trong ví dụ này, `Rectangle` và `Square` đều triển khai giao diện `Shape`, và `sumAreas` chấp nhận một mảng các đối tượng `Shape`. 
+
+Khi chúng ta truyền một đối tượng `Rectangle` hoặc `Square` vào `sumAreas`, chúng ta đang tuân thủ nguyên tắc Thay thế Liskov, vì cả hai loại hình này có thể thay thế cho nhau mà không làm thay đổi tính đúng đắn của chương trình.
+-->
+---
+![bg opacity](./assets/gradient.jpg)
+
+### 4. Nguyên tắc phân tách giao diện (Interface Segregation Principle - ISP)
+
+- Không nên dồn hết các prop hoặc các method vào trong một interface mà nên tách riêng ra các interface nhất định, có thể giảm thiểu sự phụ thuộc không cần thiết và tăng tính linh hoạt của code.
+
+<style scoped> { text-align: left; }</style>
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+```js
+interface ActiveIngredient {
+  code: string;
+  name: string;
+  note: string;
+  status: boolean;
+}
+
+interface ActiveIngredientResponse extends ActiveIngredient{
+  id: string;
+  creationTime: string;
+  creatorId: string;
+  lastModificationTime: string;
+  lastModifierId: string;
+}
+```
+<!--
+Ví dụ trên chúng ta có thể thấy rằng, interface ActiveIngredient được dùng để Create; Update data bao gồm các prop như code, name ...
+
+Nhưng khi Get thì cần những prop như id, creationTime... để hiển thị lên giao diện thì interface ActiveIngredient lại không đáp ứng được. Nếu sửa interface ActiveIngredient thì lại phạm vào quy tắc số 2 là Nguyên tắc đóng mở
+
+Và nếu có sửa được thì các function hoặc class cũ đã dùng interface ActiveIngredient cũng không dùng đến các prop mới như id, creationTime... để sử dụng
+
+Vậy nên tách ra một interface mới để tránh ảnh hưởng tới các chức năng cũ đã sử dụng interface ActiveIngredient
+-->
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+### 5. Nguyên tắc nghịch đảo phụ thuộc (Dependency Inversion Principle - DIP)
+
+- Các module cấp cao không nên phụ thuộc vào các modules cấp thấp. Cả 2 nên phụ thuộc vào abstraction.
+
+- Interface (abstraction) không nên phụ thuộc vào chi tiết, mà ngược lại. (Các class giao tiếp với nhau thông qua interface, không phải thông qua implementation).
+
+<style scoped> { text-align: left; }</style>
+---
+![bg opacity](./assets/gradient.jpg)
+
+Không áp dụng **Nguyên tắc nghịch đảo phụ thuộc**:
+```js
+// class OrderService phụ thuộc trực tiếp vào class PayPalPaymentService
+class OrderService {
+  constructor() {
+    this.paymentService = new PayPalPaymentService();
+  }
+
+  processOrder(order: any) {
+    // Xử lý đơn hàng và thanh toán bằng dịch vụ thanh toán PayPal
+    this.paymentService.pay(order.totalAmount);
+    // Các bước xử lý khác...
+  }
+}
+
+// class PayPalPaymentService
+class PayPalPaymentService {
+  pay(amount: number) {
+    console.log(`Paying $${amount} via PayPal`);
+    // Gọi API PayPal để xử lý thanh toán
+  }
+}
+```
+<!--
+ `OrderService` phụ thuộc trực tiếp vào `PayPalPaymentService`, điều này là không tốt vì nó làm cho `OrderService` cứng chỉ có một dịch vụ thanh toán cụ thể. 
+ 
+ Khi chúng ta muốn thay đổi hoặc mở rộng hỗ trợ cho các dịch vụ thanh toán mới, chúng ta sẽ phải sửa đổi trực tiếp `OrderService`, điều này không tuân thủ nguyên tắc DIP.
+-->
 
 <style scoped>p { text-align: left; }</style>
+---
+![bg opacity](./assets/gradient.jpg)
+
+Áp dụng **Nguyên tắc nghịch đảo phụ thuộc**:
+```js
+// Định nghĩa một interface trừu tượng cho các dịch vụ thanh toán
+interface PaymentService {
+  pay(amount: number): void;
+}
+
+// PayPalPaymentService triển khai interface PaymentService
+class PayPalPaymentService implements PaymentService {
+  pay(amount: number) {
+    console.log(`Paying $${amount} via PayPal`);
+    // Gọi API PayPal để xử lý thanh toán
+  }
+}
+```
+<style scoped>p { text-align: left; }</style>
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+```js
+// GooglePayPaymentService triển khai interface PaymentService
+class GooglePayPaymentService implements PaymentService {
+  pay(amount: number) {
+    console.log(`Paying $${amount} via Google Pay`);
+    // Gọi API Google Pay để xử lý thanh toán
+  }
+}
+
+// class OrderService không phụ thuộc trực tiếp vào các dịch vụ thanh toán cụ thể
+class OrderService {
+  constructor(private paymentService: PaymentService) {}
+
+  processOrder(order: any) {
+    // Xử lý đơn hàng và thanh toán bằng dịch vụ thanh toán được cung cấp
+    this.paymentService.pay(order.totalAmount);
+    // Các bước xử lý khác...
+  }
+}
+```
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+```js
+// Sử dụng OrderService với PayPalPaymentService
+const paypalService = new PayPalPaymentService();
+const orderServiceWithPayPal = new OrderService(paypalService);
+orderServiceWithPayPal.processOrder({ totalAmount: 100 });
+
+// Sử dụng OrderService với GooglePayPaymentService
+const googlePayService = new GooglePayPaymentService();
+const orderServiceWithGooglePay = new OrderService(googlePayService);
+orderServiceWithGooglePay.processOrder({ totalAmount: 200 });
+```
+<!--
+Trong ví dụ này, `OrderService` không phụ thuộc trực tiếp vào các dịch vụ thanh toán cụ thể như `PayPalPaymentService` hoặc `GooglePayPaymentService`.
+
+Thay vào đó, nó phụ thuộc vào một giao diện trừu tượng `PaymentService`. Điều này giúp chúng ta dễ dàng thay đổi hoặc mở rộng hỗ trợ cho các dịch vụ thanh toán mới mà không cần phải sửa đổi `OrderService`,
+-->
+---
+![bg opacity](./assets/gradient.jpg)
+
+### 🔗 LINK THAM KHẢO
+
+- [Tôi đi code dạo](https://toidicodedao.com/2015/03/24/solid-la-gi-ap-dung-cac-nguyen-ly-solid-de-tro-thanh-lap-trinh-vien-code-cung/)
 
 ---
 
 ![bg opacity](./assets/gradient.jpg)
 
-- **Hạn chế**:
-  - **Tăng tải cho máy chủ**: Nếu không được quản lý cẩn thận, caching tại mức server-side có thể tăng gánh nặng cho máy chủ khi phải xử lý nhiều yêu cầu caching.
-  - **Không hiệu quả đối với dữ liệu động**: Caching server-side thường không hiệu quả đối với dữ liệu động, đặc biệt là nếu dữ liệu thay đổi thường xuyên.
+### ❓ Q&A 
 
 ---
 
 ![bg opacity](./assets/gradient.jpg)
 
-### Kết luận
-
-- **Kết Hợp Sử Dụng**: Nhiều ứng dụng sử dụng cả hai chiến lược, kết hợp client-side và server-side caching để tối ưu hóa hiệu suất và kiểm soát tài nguyên.
-
-- **Các Kịch Bản Sử Dụng Khác Nhau**: Client-side caching thường được ưu tiên cho các tài nguyên như hình ảnh, CSS và JavaScript. Server-side caching thường được sử dụng cho các trang động và dữ liệu từ máy chủ.
-
----
-![bg opacity](./assets/gradient.jpg)
-
-- **Tùy Chọn Cấu Hình**: Quyết định sử dụng client-side hay server-side caching phụ thuộc vào yêu cầu cụ thể của ứng dụng, loại tài nguyên, và yêu cầu hiệu suất của người dùng.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### REFERENCES
-
-- Unordered list can use asterisks
-- Unordered list can use asterisks
-- Unordered list can use asterisks
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### Q&A
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### THANK YOU
+### 📖 THANK YOU 
