@@ -172,6 +172,10 @@ Khi làm việc với hệ thống cache, việc quản lý và xử lý "stale 
 <style scoped>{ text-align: left; }</style>
 ---
 
+![bg](./assets/quote.jpg)
+
+---
+
 ![bg opacity](./assets/gradient.jpg)
 
 - Một số phương pháp phổ biến để thực hiện cache invalidation:
@@ -259,10 +263,22 @@ Khi làm việc với hệ thống cache, việc quản lý và xử lý "stale 
 ---
 ![bg opacity](./assets/gradient.jpg)
 
-### REFERENCES
+### Caching trong các hệ thống thực tế
 
-- [MDN](https://developer.mozilla.org/en-US/)
+---
+![bg opacity](./assets/gradient.jpg)
 
+- Trong CPU có caching để tăng tốc độ xử lý. (Vì vậy mới có vụ lỗi bảo mật **[Meltdown](https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability))**).
+
+- SQL Server cũng có caching để lưu query plan.
+
+- Giao thức HTTP hỗ trợ trình duyệt cache các tài nguyên từ server, thông qua **Header Cache-Control**. Nhờ header này mà web **[Thế giới di động](https://www.thegioididong.com)** load nhanh, đỡ phải tải lại resource.
+---
+![bg opacity](./assets/gradient.jpg)
+
+- Bản thân **[CDN – Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network)** cũng là một dạng cache, đưa static resource như ảnh, CSS, JS đến server nằm gần người dùng hơn (nhằm tăng tốc độ tải).
+
+- Trong các ứng dụng lớn, có nhiều application server, người ta thường lưu trữ cache trong một server riêng, sử dụng **[Redis](https://redis.io)** hoặc **[Memcache](https://memcached.org)**
 ---
 
 ![bg opacity](./assets/gradient.jpg)
