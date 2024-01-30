@@ -57,32 +57,56 @@ Hệ thống thư viện có thể được cấu hình để tự động làm 
 
 ---
 
+![bg opacity](./assets/gradient.jpg)
+
+### Ưu điểm của Caching
+
+#### 1. Tính hiệu quả
+
+- Caching giải quyết được hầu hết mọi vấn đề về hiệu năng và sự nghẽn cổ chai trong việc xử lí hàng ngàn request trong 1 thời gian.
+
+<style scoped>h3 { text-align: center; }</style>
+<style scoped>{ text-align: left; }</style>
+
+<!--
+Giả sử mỗi giây bạn nhận được 100 request, mỗi request sẽ mất 1s để chờ database query xử lý. Database sẽ dễ bị quá tải, người dùng thì chờ mòn râu.
+
+Sử dụng caching để cache kết quả query vào RAM, lúc này thời gian tuy xuất chỉ còn tầm 50-100ms, lại không phải cần truy cập database. Hệ thống được giảm tải, còn người dùng lại nhận được kết quả nhanh hơn rất nhiều nhiều.
+-->
+---
+
 ![bg](./assets/caching.jpg)
 
 ---
 
 ![bg opacity](./assets/gradient.jpg)
 
-### Có 2 dạng Caching
+#### 2. Đơn giản dễ hiểu, dễ implement
 
-1. Caching Tại Mức Điều Khiển (Client-Side)
-2. Caching Tại Mức Proxy Server (Server-Side)
+- Kể cả khi không dùng thư viện, chỉ cần dùng HashMap dạng Key-Value là bạn đã có thể implement caching một cách đơn giản rồi.
 
+- Trong các hệ thống cũng vậy, khi thấy một hàm chạy lâu, tốn nhiều tài nguyên, đôi khi chỉ cần implement caching cho hàm đó là hệ thống đã chạy nhanh ngay, không ảnh hưởng đến các thành phần khác của hệ thống.
+
+<style scoped>{ text-align: left; }</style>
+
+<!--
+Như ở trên đã nói không cần dùng thư viện thì chúng ta cũng có thể dùng LocalStorage hoặc SessionStorage dùng để làm cache mỗi khi browser của khách hàng truy cập vào website của mình
+-->
+---
+![bg opacity](./assets/gradient.jpg)
+
+#### 3. Support tận răng
+
+- Do phổ biến nên hầu như các ngôn ngữ đều có những thư viện hỗ trợ caching cả.
+
+- Trong các hệ thống lớn, người ta có những cache server riêng như **[Redis](https://redis.io)**, **[Memcache](https://memcached.org)**. Các server cache này có performance vô cùng mạnh mẽ, hỗ trợ backup v…v nên rất dễ tích hợp vào hệ thống.
+
+<style scoped>{ text-align: left; }</style>
 ---
 
 ![bg opacity](./assets/gradient.jpg)
 
-### Caching tại mức điều khiển (Client-Side)
-
-- Quá trình lưu trữ và tái sử dụng tài nguyên trên máy khách (trình duyệt) của người dùng
-
-- Mục tiêu của caching này là giảm thời gian tải trang web và tối ưu hóa trải nghiệm người dùng bằng cách giảm lượng dữ liệu cần phải tải lại từ máy chủ.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### Một số khái niệm trong Caching Client-Side
+### Một số khái niệm trong Caching
 
 1. **[Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)**: Hiển thị một số giá trị như max-age, no-cache, no-store,... được sử dụng để định rõ cách trình duyệt nên lưu trữ và sử dụng tài nguyên.
 
@@ -95,6 +119,10 @@ Cache-Control: max-age=3600
 ```
 Expires: Thu, 01 Jan 2023 00:00:00 GMT
 ```
+
+<!--
+time tính bằng S
+-->
 ---
 
 ![bg opacity](./assets/gradient.jpg)
@@ -108,15 +136,55 @@ Expires: Thu, 01 Jan 2023 00:00:00 GMT
 - Cho phép triển khai các chiến lược caching phức tạp và quản lý tài nguyên nằm ngoài khả năng của trình duyệt chính.
 
 ---
+![bg opacity](./assets/gradient.jpg)
+
+### Những điều cần lưu khi sử dụng Caching
+
+#### 1. Stale Data – Stale Cache
+
+- **Stale Data (Dữ liệu lỗi thời)**: dữ liệu trong hệ thống đã trở nên lỗi thời, tức là nó không còn đại diện cho trạng thái mới nhất của dữ liệu trong hệ thống. 
+
+- Điều này có thể xảy ra khi dữ liệu được sao chép từ một nguồn khác nhau và không được cập nhật đồng bộ, hoặc khi dữ liệu thay đổi trong hệ thống nhưng cache không được cập nhật kịp thời.
+
+<style scoped>h3 { text-align: center; }</style>
+<style scoped>{ text-align: left; }</style>
+---
 
 ![bg opacity](./assets/gradient.jpg)
 
-### Caching tại mức **[Proxy Server](https://developer.mozilla.org/en-US/docs/Glossary/Proxy_server)** (Server-Side)
+- **Stale Cache (Bộ nhớ đệm lỗi thời)**: đề cập đến trạng thái của cache trong hệ thống khi nó chứa dữ liệu lỗi thời. Cache thường được sử dụng để tăng hiệu suất bằng cách lưu trữ dữ liệu mà thường xuyên được truy cập, giúp giảm thời gian truy cập dữ liệu từ nguồn gốc. 
 
-- Là quá trình lưu trữ tài nguyên không chỉ trên trình duyệt client mà còn trên các proxy server và máy chủ. Điều này giúp giảm tải cho máy chủ và tăng tốc độ tải trang web cho nhiều người dùng bằng cách giảm lượng dữ liệu phải đi qua mạng.
+- Tuy nhiên, khi dữ liệu được cập nhật trên nguồn gốc nhưng cache không được cập nhật kịp thời, điều này dẫn đến việc cache chứa dữ liệu lỗi thời, gọi là "stale cache".
 
-<!-- ### fit :ok_hand: -->
+<style scoped>{ text-align: left; }</style>
 
+<!--
+Khi làm việc với hệ thống cache, việc quản lý và xử lý "stale data" và "stale cache" là rất quan trọng để đảm bảo rằng dữ liệu được truy xuất là luôn là phiên bản mới nhất và chính xác nhất có thể.
+-->
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+#### 2. Cache Invalidation (Vô hiệu hóa cache)
+
+- Quá trình loại bỏ hoặc đánh dấu các dữ liệu trong bộ nhớ cache là lỗi thời hoặc không còn hợp lệ nữa. Quá trình này thường được thực hiện khi dữ liệu gốc đã thay đổi, do đó cần làm mới cache để đảm bảo rằng dữ liệu được truy xuất là phiên bản mới nhất.
+
+<style scoped>{ text-align: left; }</style>
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+- Một số phương pháp phổ biến để thực hiện cache invalidation:
+
+  + Thông qua giao thức HTTP với việc sử dụng các header như `Cache-Control` và `ETag`.
+  + Time to Live (TTL) là một cách đơn giản để quản lý cache là thiết lập một khoảng thời gian mà dữ liệu được coi là hợp lệ trong cache sau khi nó được lưu trữ.
+
+<style scoped>{ text-align: left; }</style>
+---
+
+![bg opacity](./assets/gradient.jpg)
+
+### Một số HTTP Header thường gặp trong caching
 ---
 
 ![bg opacity](./assets/gradient.jpg)
@@ -189,71 +257,11 @@ Expires: Thu, 01 Jan 2023 00:00:00 GMT
   - Đã lạc lõng trong các phiên bản gần đây và thường được thay thế bằng Cache-Control.
 
 ---
-
-![bg opacity](./assets/gradient.jpg)
-
-### So sánh giữa **Client-Side Caching** và **Server-Side Caching**
-
-**Client-Side Caching**
-
-- **Điểm mạnh**:
-  - **Tốc độ truy cập nhanh**: Tài nguyên được lưu trữ trực tiếp trên trình duyệt client, giúp giảm thời gian tải trang cho người dùng khi họ truy cập lại trang web.
-  - **Giảm tải cho máy chủ**: Giảm áp lực lên máy chủ do tài nguyên được lưu trữ và sử dụng từ bộ nhớ cache của trình duyệt client.
-
-<style scoped>p { text-align: left; }</style>
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-- **Hạn chế**:
-  - **Dung lượng hạn chế**: Bộ nhớ cache trên trình duyệt client có thể bị giới hạn và có thể bị xóa bất cứ lúc nào, đặc biệt là khi người dùng xóa lịch sử trình duyệt.
-  - **Không kiểm soát tuyệt đối**: Không hoàn toàn kiểm soát được bởi máy chủ, điều này có thể dẫn đến việc sử dụng phiên bản cũ của tài nguyên khi đóng bộ nhớ cache.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-**Server-Side Caching**
-
-- **Điểm mạnh**:
-  - **Kiểm soát cao**: Máy chủ có kiểm soát đầy đủ về cách tài nguyên được lưu trữ và tái sử dụng.
-  - **Áp dụng đối với tất cả người dùng**: Caching ở mức server-side áp dụng cho tất cả người dùng, giúp giảm thời gian tải trang cho mọi người dùng truy cập.
-
-<style scoped>p { text-align: left; }</style>
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-- **Hạn chế**:
-  - **Tăng tải cho máy chủ**: Nếu không được quản lý cẩn thận, caching tại mức server-side có thể tăng gánh nặng cho máy chủ khi phải xử lý nhiều yêu cầu caching.
-  - **Không hiệu quả đối với dữ liệu động**: Caching server-side thường không hiệu quả đối với dữ liệu động, đặc biệt là nếu dữ liệu thay đổi thường xuyên.
-
----
-
-![bg opacity](./assets/gradient.jpg)
-
-### Kết luận
-
-- **Kết Hợp Sử Dụng**: Nhiều ứng dụng sử dụng cả hai chiến lược, kết hợp client-side và server-side caching để tối ưu hóa hiệu suất và kiểm soát tài nguyên.
-
-- **Các Kịch Bản Sử Dụng Khác Nhau**: Client-side caching thường được ưu tiên cho các tài nguyên như hình ảnh, CSS và JavaScript. Server-side caching thường được sử dụng cho các trang động và dữ liệu từ máy chủ.
-
----
-![bg opacity](./assets/gradient.jpg)
-
-- **Tùy Chọn Cấu Hình**: Quyết định sử dụng client-side hay server-side caching phụ thuộc vào yêu cầu cụ thể của ứng dụng, loại tài nguyên, và yêu cầu hiệu suất của người dùng.
-
----
-
 ![bg opacity](./assets/gradient.jpg)
 
 ### REFERENCES
 
-- Unordered list can use asterisks
-- Unordered list can use asterisks
-- Unordered list can use asterisks
+- [MDN](https://developer.mozilla.org/en-US/)
 
 ---
 
