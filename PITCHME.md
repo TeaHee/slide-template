@@ -34,6 +34,31 @@ Hiểu rõ về cơ chế caching trong trình duyệt và cách sử dụng nó
 
 - Việc caching sẽ giúp giảm thời gian tải, cùng với đó việc không tải những dữ liệu không cần thiết cũng giúp giảm lưu lượng phải truyền tải.
 
+<!-- Cho ví dụ đời sống về caching
+Ví dụ: Thư viện sách
+
+Tình huống: Một thư viện lớn chứa hàng ngàn cuốn sách và đối với mỗi cuốn sách, thông tin như tên tác giả, thể loại, và vị trí có thể được lưu trữ trong hệ thống của thư viện.
+
+Caching trong thực tế:
+
+Thủ công:
+
+Ban đầu, khi một người đọc yêu cầu thông tin về một cuốn sách cụ thể, thư viện có thể phải truy vấn cơ sở dữ liệu của mình để tìm thông tin này. Việc này có thể tốn thời gian và tài nguyên máy chủ.
+
+Tuy nhiên, một khi thông tin về cuốn sách đã được truy vấn và hiển thị cho người đọc, thư viện có thể lưu trữ thông tin này trong bộ nhớ cache của hệ thống của mình.
+
+Khi một người khác yêu cầu thông tin về cùng một cuốn sách, thư viện có thể truy cập thông tin này từ bộ nhớ cache thay vì phải truy vấn cơ sở dữ liệu một lần nữa, làm giảm thời gian và tài nguyên cần thiết.
+Tự động:
+
+Hệ thống thư viện có thể được cấu hình để tự động làm mới hoặc làm sạch bộ nhớ cache định kỳ để đảm bảo rằng thông tin được lưu trữ trong cache luôn là mới nhất và chính xác.
+
+Điều này giúp tránh tình trạng thông tin lỗi thời được lưu trữ trong cache, đồng thời đảm bảo rằng việc sử dụng cache làm giảm thời gian truy cập dữ liệu một cách hiệu quả.
+-->
+
+---
+
+![bg](./assets/caching.jpg)
+
 ---
 
 ![bg opacity](./assets/gradient.jpg)
@@ -53,12 +78,6 @@ Hiểu rõ về cơ chế caching trong trình duyệt và cách sử dụng nó
 
 - Mục tiêu của caching này là giảm thời gian tải trang web và tối ưu hóa trải nghiệm người dùng bằng cách giảm lượng dữ liệu cần phải tải lại từ máy chủ.
 
-<!-- ## **[GitHub Pages](https://github.com/pages)** -->
-
-<!-- #### Ready to write & host your deck! -->
-
-<!-- [![Use this as template h:1.5em](https://img.shields.io/badge/-Use%20this%20as%20template-brightgreen?style=for-the-badge&logo=github)](https://github.com/yhatt/marp-cli-example/generate) -->
-
 ---
 
 ![bg opacity](./assets/gradient.jpg)
@@ -76,15 +95,6 @@ Cache-Control: max-age=3600
 ```
 Expires: Thu, 01 Jan 2023 00:00:00 GMT
 ```
-
-<!-- ![bg right 60%](https://icongr.am/simple/netlify.svg?colored)
-
-## **[Netlify](https://www.netlify.com/)**
-
-#### Ready to write & host your deck!
-
-[![Deploy to Netlify h:1.5em](./assets/netlify-deploy-button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yhatt/marp-cli-example) -->
-
 ---
 
 ![bg opacity](./assets/gradient.jpg)
@@ -96,14 +106,6 @@ Expires: Thu, 01 Jan 2023 00:00:00 GMT
 4. **[Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)**: là một công nghệ mạnh mẽ cho caching và xử lý sự kiện offline.
 
 - Cho phép triển khai các chiến lược caching phức tạp và quản lý tài nguyên nằm ngoài khả năng của trình duyệt chính.
-
-<!-- ![bg right 60%](https://icongr.am/simple/zeit.svg)
-
-## **[Vercel](https://vercel.com/)**
-
-#### Ready to write & host your deck!
-
-[![Deploy to Vercel h:1.5em](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/yhatt/marp-cli-example) -->
 
 ---
 
