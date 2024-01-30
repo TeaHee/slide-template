@@ -61,6 +61,10 @@ Hệ thống thư viện có thể được cấu hình để tự động làm 
 
 ### Ưu điểm của Caching
 
+---
+
+![bg opacity](./assets/gradient.jpg)
+
 #### 1. Tính hiệu quả
 
 - Caching giải quyết được hầu hết mọi vấn đề về hiệu năng và sự nghẽn cổ chai trong việc xử lí hàng ngàn request trong 1 thời gian.
@@ -108,6 +112,10 @@ Như ở trên đã nói không cần dùng thư viện thì chúng ta cũng có
 
 ### Một số khái niệm trong Caching
 
+---
+
+![bg opacity](./assets/gradient.jpg)
+
 1. **[Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)**: Hiển thị một số giá trị như max-age, no-cache, no-store,... được sử dụng để định rõ cách trình duyệt nên lưu trữ và sử dụng tài nguyên.
 
 ```
@@ -139,6 +147,9 @@ time tính bằng S
 ![bg opacity](./assets/gradient.jpg)
 
 ### Những điều cần lưu khi sử dụng Caching
+
+---
+![bg opacity](./assets/gradient.jpg)
 
 #### 1. Stale Data – Stale Cache
 
